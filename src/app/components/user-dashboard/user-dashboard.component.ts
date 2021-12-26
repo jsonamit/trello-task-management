@@ -34,13 +34,30 @@ export class UserDashboardComponent implements OnInit {
   addUser(): void {
     const dialogRef = this.dialog.open(AddUserDialogComponent, {
       width: '250px',
+      data: {type: 'add'},
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      let uniqueId = Math.floor(Math.random() * 1000);
-      this.connectedTo.push(uniqueId);
-      this.taskservice.createUser({ user_id:uniqueId, username:data.username,task:[]});
-      this.userArray = this.taskservice.getUser();
+      if(data && data.type=='add') { 
+        let uniqueId = Math.floor(Math.random() * 1000);
+        this.connectedTo.push(uniqueId);
+        this.taskservice.createUser({ user_id:uniqueId, username:data.username,task:[]});
+        this.userArray = this.taskservice.getUser();
+      }
+    });
+  }
+
+  editUser(i:number) {
+    let user = this.userArray[i];
+    const dialogRef = this.dialog.open(AddUserDialogComponent, {
+      width: '250px',
+      data: {type: 'edit',user},
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if(data && data.type=='edit') { 
+        this.taskservice.editUser(i,data);
+      }
     });
   }
 

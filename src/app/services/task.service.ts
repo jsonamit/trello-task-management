@@ -33,6 +33,10 @@ export class TaskService {
     this.taskArray.splice(index,1); 
   }
 
+  editUser(i:number,data:any) {
+    this.taskArray[i].username=data.username;
+  }
+
   editTask(i:number,j:number,data:any) {
     this.taskArray[i].task[j].name=data.taskname;
   }

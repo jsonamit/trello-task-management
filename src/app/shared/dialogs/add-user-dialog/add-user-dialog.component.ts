@@ -10,11 +10,22 @@ import { DialogData } from '../../../models/DialogData';
 export class AddUserDialogComponent implements OnInit {
 
   userData:any = {};
+  dataType:any;
+
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<AddUserDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) {}
+  ) {
+    this.dataType = data;
+    if(this.dataType.type=='add') {
+      this.userData.type = 'add';
+    } else {
+      console.log('hhghghg',this.dataType);
+      this.userData.type = 'edit';
+      this.userData.username =  this.dataType.user.username;
+    }
+  }
 
   ngOnInit(): void {
   }
